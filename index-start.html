@@ -7,7 +7,7 @@
 <body>
 
   <div class="hero">
-    <h1 contenteditable>🔥WOAH!</h1>
+    <h1 contenteditable>🔥IT'S LITT!</h1>
   </div>
 
   <style>
@@ -31,10 +31,46 @@
   h1 {
     text-shadow: 10px 10px 0 rgba(0,0,0,1);
     font-size: 100px;
+    background: lightblue;
   }
   </style>
 
 <script>
+ 
+  const hero = document.querySelector('.hero');
+  const text = document.querySelector('h1');
+  const walk = 100; //100px
+
+  function shadow(e) {
+    // line 44 is the same thing as lines 45-46 
+    // const { offsetWidth: width, offsetHeight: height } = hero;
+    const width = hero.offsetWidth;
+    const height = hero.offsetHeight;
+    // line 48 is the same thing as lines 49-50
+    // let { offsetX: x, offsetY: y } = e;
+    let x = e.offsetX;
+    let y = e.offsetY;
+    
+    if (this !== e.target) {
+      x += e.target.offsetLeft;
+      y += e.target.offsetTop;
+    }
+
+    // formula that sets the boundaries correctly and use math.round to get a clean number without decimals
+    const xWalk = Math.round((x / width * walk) - (walk / 2));
+    const yWalk = Math.round((y / height * walk) - (walk / 2));
+
+    text.style.textShadow = `
+      ${xWalk}px ${yWalk}px 0 red,
+      ${xWalk * -1}px ${yWalk}px 0 black,
+      ${xWalk}px ${yWalk * -1}px 0 red,
+      ${yWalk * -1}px ${xWalk}px 0 yellow,
+      ${yWalk * -1}px ${xWalk * -1}px 0 yellow
+    `;
+  }
+
+  hero.addEventListener('mousemove', shadow);
+
 </script>
 </body>
 </html>
